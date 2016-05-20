@@ -17,7 +17,7 @@
 #include "FairMQLogger.h"
 #include "FairMQParser.h"
 #include "FairMQProgOptions.h"
-#include "ConditionsMQClient.h"
+#include "CCDB/ConditionsMQClient.h"
 
 #ifdef NANOMSG
 #include "FairMQTransportFactoryNN.h"
