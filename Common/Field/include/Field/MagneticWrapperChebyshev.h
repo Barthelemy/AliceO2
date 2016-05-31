@@ -1,4 +1,4 @@
-/// \file MagWrapCheb.h
+/// \file MagneticWrapperChebyshev.h
 /// \brief Definition of the MagWrapCheb class
 /// \author ruben.shahoyan@cern.ch 20/03/2007
 

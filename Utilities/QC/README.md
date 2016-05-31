@@ -1,5 +1,4 @@
-O2qa
-=======
+# Quality Assurance Prototype
 
 Quality assurance software prototype.
 

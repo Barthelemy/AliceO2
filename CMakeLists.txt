@@ -31,18 +31,21 @@ project(ALICEO2)
 
 # Check for needed environment variables
 #IF not stop execution unless modular build is activated
-Option(ALICEO2_MODULAR_BUILD "Modular build without environment variables" OFF)
+option(ALICEO2_MODULAR_BUILD "Modular build without environment variables" OFF)
 IF (NOT ALICEO2_MODULAR_BUILD)
+  # TODO why do we need env var to be set ???
+  # TODO Find scripts or Config scripts are made for that.
+
   IF (NOT DEFINED ENV{FAIRROOTPATH})
-    MESSAGE(FATAL_ERROR "You did not define the environment variable FAIRROOTPATH which is needed to find FairRoot. Please set this variable and execute cmake again.")
+    message(FATAL_ERROR "You did not define the environment variable FAIRROOTPATH which is needed to find FairRoot. Please set this variable and execute cmake again.")
   ENDIF (NOT DEFINED ENV{FAIRROOTPATH})
 
   IF (NOT DEFINED ENV{SIMPATH})
-    MESSAGE(FATAL_ERROR "You did not define the environment variable SIMPATH which is nedded to find the external packages. Please set this variable and execute cmake again.")
+    message(FATAL_ERROR "You did not define the environment variable SIMPATH which is nedded to find the external packages. Please set this variable and execute cmake again.")
   ENDIF (NOT DEFINED ENV{SIMPATH})
 
-  SET(SIMPATH $ENV{SIMPATH})
-  SET(FAIRROOTPATH $ENV{FAIRROOTPATH})
+  set(SIMPATH $ENV{SIMPATH})
+  set(FAIRROOTPATH $ENV{FAIRROOTPATH})
 
   # where to look first for cmake modules, before ${CMAKE_ROOT}/Modules/
   # is checked
@@ -50,7 +53,7 @@ IF (NOT ALICEO2_MODULAR_BUILD)
   set(CMAKE_MODULE_PATH "${FAIRROOTPATH}/share/fairbase/cmake/modules_old" ${CMAKE_MODULE_PATH})
   set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules" ${CMAKE_MODULE_PATH})
 
-  Set(CheckSrcDir "${FAIRROOTPATH}/share/fairbase/cmake/checks")
+  set(CheckSrcDir "${FAIRROOTPATH}/share/fairbase/cmake/checks")
 ELSE (NOT ALICEO2_MODULAR_BUILD)
   find_package(Boost REQUIRED)
 ENDIF (NOT ALICEO2_MODULAR_BUILD)
@@ -66,8 +69,8 @@ include(CheckCompiler)
 
 #Check the compiler and set the compile and link flags
 IF (NOT CMAKE_BUILD_TYPE)
-  Message(STATU"Set BuildType DEBUG")
-  set(CMAKE_BUILD_TYPE Debug)
+  message(STATUS "Set BuildType RelWithDebInfo")
+  set(CMAKE_BUILD_TYPE RelWithDebInfo)
 ENDIF (NOT CMAKE_BUILD_TYPE)
 Check_Compiler()
 
@@ -75,13 +78,13 @@ set(LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
 set(INCLUDE_OUTPUT_DIRECTORY "${PROJECT_BINARY_DIR}/include")
 Set(VMCWORKDIR ${CMAKE_SOURCE_DIR})
-Option(USE_PATH_INFO "Information from PATH and LD_LIBRARY_PATH are used." OFF)
+option(USE_PATH_INFO "Information from PATH and LD_LIBRARY_PATH are used." OFF)
 IF (USE_PATH_INFO)
-  Set(PATH "$PATH")
+  set(PATH "$PATH")
   IF (APPLE)
-    Set(LD_LIBRARY_PATH $ENV{DYLD_LIBRARY_PATH})
+    set(LD_LIBRARY_PATH $ENV{DYLD_LIBRARY_PATH})
   ELSE (APPLE)
-    Set(LD_LIBRARY_PATH $ENV{LD_LIBRARY_PATH})
+    set(LD_LIBRARY_PATH $ENV{LD_LIBRARY_PATH})
   ENDIF (APPLE)
 ELSE (USE_PATH_INFO)
   STRING(REGEX MATCHALL "[^:]+" PATH "$ENV{PATH}")
@@ -94,7 +97,7 @@ CHECK_OUT_OF_SOURCE_BUILD()
 # Check IF we are on an UNIX system. IF not stop with an error
 # message
 IF (NOT UNIX)
-  MESSAGE(FATAL_ERROR "You're not on an UNIX system. The project was up to now only tested on UNIX systems, so we break here. IF you want to go on please edit the CMakeLists.txt in the source directory.")
+  message(FATAL_ERROR "You're not on an UNIX system. The project was up to now only tested on UNIX systems, so we break here. IF you want to go on please edit the CMakeLists.txt in the source directory.")
 ENDIF (NOT UNIX)
 
 # Check IF the external packages are installed into a separate install
@@ -108,10 +111,10 @@ IF (NOT ALICEO2_MODULAR_BUILD)
 ENDIF (NOT ALICEO2_MODULAR_BUILD)
 
 # Set the library version in the main CMakeLists.txt
-SET(ALICEO2_MAJOR_VERSION 0)
-SET(ALICEO2_MINOR_VERSION 0)
-SET(ALICEO2_PATCH_VERSION 0)
-SET(ALICEO2_VERSION "${ALICEO2_MAJOR_VERSION}.${ALICEO2_MINOR_VERSION}.${ALICEO2_PATCH_VERSION}")
+set(ALICEO2_MAJOR_VERSION 0)
+set(ALICEO2_MINOR_VERSION 0)
+set(ALICEO2_PATCH_VERSION 0)
+set(ALICEO2_VERSION "${ALICEO2_MAJOR_VERSION}.${ALICEO2_MINOR_VERSION}.${ALICEO2_PATCH_VERSION}")
 IF (NOT ROOT_FOUND_VERSION OR ROOT_FOUND_VERSION LESS 59999)
   SET(FAIRROOT_LIBRARY_PROPERTIES ${FAIRROOT_LIBRARY_PROPERTIES}
       VERSION "${ALICEO2_VERSION}"
@@ -127,8 +130,8 @@ ENDIF ()
 
 Generate_Version_Info()
 
-SET(_LIBDIR ${CMAKE_BINARY_DIR}/lib)
-SET(LD_LIBRARY_PATH ${_LIBDIR} ${LD_LIBRARY_PATH})
+set(_LIBDIR ${CMAKE_BINARY_DIR}/lib)
+set(LD_LIBRARY_PATH ${_LIBDIR} ${LD_LIBRARY_PATH})
 
 IF (NOT ALICEO2_MODULAR_BUILD)
   # Check IF the compiler support specific C++11 features
@@ -139,7 +142,7 @@ IF (NOT ALICEO2_MODULAR_BUILD)
 
   # Check IF the compilation flag -std=c++11 is set
   IF (NOT CMAKE_CXX_FLAGS)
-    Message(FATAL_ERROR "No C++11 support found. AliceO2 require C++11 be build.")
+    message(FATAL_ERROR "No C++11 support found. AliceO2 require C++11 be build.")
   EndIF (NOT CMAKE_CXX_FLAGS)
 
 ELSE (NOT ALICEO2_MODULAR_BUILD)
@@ -163,13 +166,7 @@ add_subdirectory(Utilities)
 add_subdirectory(Detectors)
 add_subdirectory(DataFormats)
 
-
-Option(BUILD_DOXYGEN "Build Doxygen" OFF)
-IF (BUILD_DOXYGEN)
-  MESSAGE(STATUS "*** Building the Doxygen documentaion ***")
-  ADD_SUBDIRECTORY(doxygen)
-ENDIF (BUILD_DOXYGEN)
-
+add_subdirectory(doc)
 
 IF (IWYU_FOUND)
   ADD_CUSTOM_TARGET(checkHEADERS

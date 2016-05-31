@@ -1,4 +1,4 @@
-/// \file MagWrapCheb.cxx
+/// \file MagneticWrapperChebyshev.cxx
 /// \brief Implementation of the MagWrapCheb class
 /// \author ruben.shahoyan@cern.ch 20/03/2007
 
