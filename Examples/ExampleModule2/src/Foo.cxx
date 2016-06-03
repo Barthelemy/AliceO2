@@ -5,7 +5,6 @@
 
 #include "ExampleModule2/Foo.h"
 #include "ExampleModule1/Foo.h"
-#include "Bar.h" // private class, not in the api
 
 #include <iostream>
 
@@ -15,11 +14,9 @@ namespace ExampleModule2 {
 
 void Foo::greet()
 {
-  std::cout << "Hello world from ExampleModule2::Foo" << std::endl;
+  std::cout << "Hello ExampleModule2 world!!" << std::endl;
   AliceO2::Examples::ExampleModule1::Foo otherFoo;
   otherFoo.greet();
-  AliceO2::Examples::ExampleModule2::Bar bar;
-  bar.greet();
 }
 
 int Foo::returnsN(int n)

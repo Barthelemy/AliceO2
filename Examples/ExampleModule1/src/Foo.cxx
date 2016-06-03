@@ -4,7 +4,6 @@
 ///
 
 #include "ExampleModule1/Foo.h"
-#include "Bar.h"
 
 #include <iostream>
 
@@ -14,9 +13,7 @@ namespace ExampleModule1 {
 
 void Foo::greet()
 {
-  std::cout << "Hello world from ExampleModule1::Foo" << std::endl;
-  Bar bar;
-  bar.greet();
+  std::cout << "Hello ExampleModule2 world!!" << std::endl;
 }
 
 int Foo::returnsN(int n)

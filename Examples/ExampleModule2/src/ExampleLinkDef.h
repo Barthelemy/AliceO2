@@ -5,6 +5,5 @@
 #pragma link off all functions;
 
 #pragma link C++ class AliceO2::Examples::ExampleModule2::Foo+;
-//#pragma link C++ class AliceO2::Examples::ExampleModule2::Bar+;
 
 #endif
