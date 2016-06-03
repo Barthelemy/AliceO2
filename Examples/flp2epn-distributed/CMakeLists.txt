@@ -25,6 +25,9 @@ set(LIBRARY_NAME FLP2EPNex_distributed)
 
 O2_GENERATE_LIBRARY()
 
+# Install all the public header
+install(DIRECTORY include/${MODULE_NAME} DESTINATION include)
+
 Set(Exe_Names
     ${Exe_Names}
     flpSyncSampler
