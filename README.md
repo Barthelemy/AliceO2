@@ -6,6 +6,15 @@ Alice O2 project software. Simulation and reconstruction software for the ALICE 
 
 Before compiling and installing AliceO2, the ALFA software must be installed by choosing either the full or the minimum installation.
 
+### Documentation
+The documentation single entry point is [here](https://alice-o2.web.cern.ch/). 
+
+### Issue tracking system
+We use JIRA to track issues. Head [here](https://alice.its.cern.ch/jira) to create tickets. 
+
+### Coding guidelines
+The Coding Guidelines are [here] (https://github.com/AliceO2Group/CodingGuidelines).
+
 ### Installation of ALFA (FairSoft)
 Please be sure that your system has all the required libraries (as listed on [FairSoft/DEPENDENCIES](https://github.com/FairRootGroup/FairSoft/blob/master/DEPENDENCIES)).
 
@@ -123,12 +132,6 @@ To include custom DDS location in the compilation, provide DDS_PATH flag when ca
 cmake -DDDS_PATH="/home/username/DDS/0.11.27.g79f48d4/" ..
 ```
 
-### Documentation
 
-The documentation single entry point is [here](https://alice-o2.web.cern.ch/). 
-
-### Issue tracking system
-
-We use JIRA to track issues. Head [here](https://alice.its.cern.ch/jira) to create tickets. 
 
 
