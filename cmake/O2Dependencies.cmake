@@ -774,3 +774,18 @@ o2_define_bucket(
     ${CMAKE_SOURCE_DIR}/Detectors/Base/include
     ${CMAKE_SOURCE_DIR}/Detectors/EMCAL/base/include
 )
+
+o2_define_bucket(
+    NAME
+    event_visualisation_bucket
+
+    DEPENDENCIES
+    root_base_bucket
+    graf3d
+    eve
+    CCDB
+
+    INCLUDE_DIRECTORIES
+    ${ROOT_INCLUDE_DIR}
+    ${CMAKE_SOURCE_DIR}/CCDB/include
+)
