@@ -15,6 +15,7 @@
 
 
 #include <Headers/DataHeader.h>
+#include <Framework/DataProcessingHeader.h>
 
 class O2Device;
 
@@ -100,13 +101,14 @@ private:
 
 class HdrDataDeserializer : public ISubTimeFrameVisitor {
 public:
-  HdrDataDeserializer()
+  HdrDataDeserializer() = delete;
+  HdrDataDeserializer(const FairMQChannel& pChan) : mChan(pChan)
   {
     mHeaderMessages.reserve(1024);
     mDataMessages.reserve(1024);
   }
 
-  bool deserialize(SubTimeFrame& pStf, const FairMQChannel& pChan);
+  bool deserialize(SubTimeFrame& pStf);
 
 protected:
   void visit(EquipmentHBFrames& pStf) override;
@@ -117,6 +119,7 @@ private:
   std::vector<FairMQMessagePtr>::iterator mHeaderIter;
   std::vector<FairMQMessagePtr> mDataMessages;
   std::vector<FairMQMessagePtr>::iterator mDataIter;
+  const FairMQChannel& mChan;
 };
 
 }

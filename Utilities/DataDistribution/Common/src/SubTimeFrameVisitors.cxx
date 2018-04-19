@@ -132,7 +132,7 @@ bool InterleavedHdrDataDeserializer::deserialize_impl(SubTimeFrame& pStf)
   }
   catch (std::runtime_error& e)
   {
-    LOG(ERROR) << "SubTimeFrame deserialization failed. Reason: " << e.what();
+    // LOG(ERROR) << "SubTimeFrame deserialization failed. Reason: " << e.what();
     return false; // TODO: what? O2Device.Receive() does not throw...?
   }
   catch (std::exception& e)
@@ -235,20 +235,20 @@ void HdrDataDeserializer::visit(SubTimeFrame& pStf)
   }
 }
 
-bool HdrDataDeserializer::deserialize(SubTimeFrame& pStf, const FairMQChannel& pChan)
+bool HdrDataDeserializer::deserialize(SubTimeFrame& pStf)
 {
   int ret;
 
   mHeaderMessages.clear();
 
-  if ((ret = pChan.Receive(mHeaderMessages)) < 0)
+  if ((ret = mChan.Receive(mHeaderMessages)) < 0)
     return false;
   mHeaderIter = mHeaderMessages.begin();
 
   // only receive data messages IF the data exists (TODO: should these NULL STFs be legal?)
   mDataMessages.clear();
   if (mHeaderMessages.size() > 1) {
-    if ((ret = pChan.Receive(mDataMessages)) < 0)
+    if ((ret = mChan.Receive(mDataMessages)) < 0)
       return false;
   }
   mDataIter = mDataMessages.begin();
@@ -257,6 +257,7 @@ bool HdrDataDeserializer::deserialize(SubTimeFrame& pStf, const FairMQChannel& p
   {
     // build the SubtimeFrame
     pStf.accept(*this);
+
   }
   catch (std::runtime_error& e)
   {
