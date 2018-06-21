@@ -91,7 +91,7 @@ STF_BUILDER+=" --io-threads $IO_THREADS"
 
 DPL_STF_BRIDGE="test_StfDplAdapter"
 DPL_STF_BRIDGE+=" --id SubTimeFrameBuilderDplAdapter"
-DPL_STF_BRIDGE+=" --channel-config name=SubTimeFrameBuilderDplAdapter,transport=shmem,type=pair,method=connect,address=ipc:///tmp/stf-builder-pipe-0,rateLogging=1"
+DPL_STF_BRIDGE+=" --channel-config name=SubTimeFrameBuilderDplAdapter,transport=shmem,type=pair,method=bind,address=ipc:///tmp/stf-builder-pipe-0,rateLogging=1"
 DPL_STF_BRIDGE+=" --channel-config name=from_SubTimeFrameBuilderDplAdapter_to_foreign-consumer,transport=shmem,type=pair,method=bind,address=ipc:///tmp/stf-dpl_adapter-pipe-0,rateLogging=1"
 DPL_STF_BRIDGE+=" --SubTimeFrameBuilderDplAdapter"
 DPL_STF_BRIDGE+=" --severity info"
@@ -101,7 +101,6 @@ DPL_STF_PROCESSOR+=" --id foreign-consumer"
 DPL_STF_PROCESSOR+=" --channel-config name=from_SubTimeFrameBuilderDplAdapter_to_foreign-consumer,transport=shmem,type=pair,method=connect,address=ipc:///tmp/stf-dpl_adapter-pipe-0,rateLogging=1"
 DPL_STF_PROCESSOR+=" --foreign-consumer"
 DPL_STF_PROCESSOR+=" --severity info"
-
 
 # (FLP) Start FLP+DPL processes
 if [[ $FLP_CNT -gt 0 ]]; then

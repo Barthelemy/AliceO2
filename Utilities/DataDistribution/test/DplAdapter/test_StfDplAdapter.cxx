@@ -24,7 +24,9 @@ using DataOrigin = o2::header::DataOrigin;
 // A simple workflow which takes heartbeats from
 // a raw FairMQ device as input and uses them as
 // part of the DPL.
-void defineDataProcessing(WorkflowSpec &specs) {
+//WorkflowSpec defineDataProcessing(ConfigContext &context) {
+//void defineDataProcessing(WorkflowSpec &specs) {
+WorkflowSpec defineDataProcessing(ConfigContext const&) {
 
   auto outspec = OutputSpec{o2::header::gDataOriginTPC,
                             o2::header::gDataDescriptionRawData};
@@ -50,12 +52,12 @@ void defineDataProcessing(WorkflowSpec &specs) {
       {},
       AlgorithmSpec{
         [](ProcessingContext &ctx) {
-
           LOG(DEBUG) << ctx.inputs().size();
         }
       }
     }
   );
 
-  specs.swap(workflow);
+//  specs.swap(workflow);
+  return workflow;
 }

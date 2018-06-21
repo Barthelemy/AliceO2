@@ -83,7 +83,7 @@ void CruLinkEmulator::linkReadoutThread()
           linkO2Data.mLinkDataHeader.headerSize = sizeof(DataHeader);
           linkO2Data.mLinkDataHeader.flags = 0;
           linkO2Data.mLinkDataHeader.dataDescription = o2::header::gDataDescriptionRawData;
-          linkO2Data.mLinkDataHeader.dataOrigin = (rand() % 100 < 70) ? o2::header::gDataOriginTPC : o2::Header::gDataOriginITS;
+          linkO2Data.mLinkDataHeader.dataOrigin = (rand() % 100 < 70) ? o2::header::gDataOriginTPC : o2::header::gDataOriginITS;
           linkO2Data.mLinkDataHeader.payloadSerializationMethod = o2::header::gSerializationMethodNone;
           linkO2Data.mLinkDataHeader.subSpecification = mLinkID;
 
