@@ -17,6 +17,7 @@
 #include <TObject.h> // for TObject
 #include <TString.h> // for TString
 #include "Rtypes.h"  // for Bool_t, IdPath::Class, ClassDef, etc
+#include "Framework/ProcessingContext.h"
 
 namespace o2
 {

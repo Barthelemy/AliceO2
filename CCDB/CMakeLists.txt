@@ -18,6 +18,7 @@ o2_add_library(CCDB
                                     ROOT::Hist
                                     O2::CommonUtils
                                     FairMQ::FairMQ
+	O2::Framework
                TARGETVARNAME targetName)
 
 o2_target_root_dictionary(CCDB
