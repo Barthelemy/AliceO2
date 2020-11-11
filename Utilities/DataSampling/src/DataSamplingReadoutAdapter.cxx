@@ -14,7 +14,6 @@
 #include <atomic>
 #include <iostream>
 
-
 using namespace o2::framework;
 using namespace std;
 
