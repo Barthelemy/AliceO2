@@ -370,6 +370,10 @@ class CcdbApi //: public DatabaseInterface
                           long timestamp = -1, std::map<std::string, std::string>* headers = nullptr, std::string const& etag = "",
                           const std::string& createdNotAfter = "", const std::string& createdNotBefore = "") const;
 
+  void* retrieveFromTFile(TClass* type, std::string const& path, std::map<std::string, std::string> const& metadata,
+                                   long timestamp = -1, std::map<std::string, std::string>* headers = nullptr, std::string const& etag = "",
+                                   const std::string& createdNotAfter = "", const std::string& createdNotBefore = "") const;
+
   /**
    * A helper function to extract object from a local ROOT file
    * @param filename name of ROOT file

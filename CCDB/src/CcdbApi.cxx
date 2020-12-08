@@ -829,6 +829,14 @@ void* CcdbApi::retrieveFromTFile(std::type_info const& tinfo, std::string const&
     std::cerr << "Could not retrieve ROOT dictionary for type " << tinfo.name() << " aborting to read from CCDB\n";
     return nullptr;
   }
+  return retrieveFromTFile(tcl, path, metadata, timestamp, headers, etag, createdNotAfter, createdNotBefore);
+}
+
+void* CcdbApi::retrieveFromTFile(TClass* tcl, std::string const& path,
+                                 std::map<std::string, std::string> const& metadata, long timestamp,
+                                 std::map<std::string, std::string>* headers, std::string const& etag,
+                                 const std::string& createdNotAfter, const std::string& createdNotBefore) const
+{
 
   CURL* curl_handle = curl_easy_init();
   string fullUrl = getFullUrlForRetrieval(curl_handle, path, metadata, timestamp);
