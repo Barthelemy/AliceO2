@@ -47,6 +47,7 @@ std::mutex gIOMutex; // to protect TMemFile IO operations
 
 CcdbApi::~CcdbApi()
 {
+  curl_easy_cleanup(mCurl);
   curl_global_cleanup();
 }
 
@@ -54,6 +55,10 @@ void CcdbApi::curlInit()
 {
   // todo : are there other things to initialize globally for curl ?
   curl_global_init(CURL_GLOBAL_DEFAULT);
+  mCurl = curl_easy_init();
+  if(mCurl == nullptr) {
+    cerr << "curl initialization failure" << endl;
+  }
 }
 
 void CcdbApi::init(std::string const& host)
@@ -147,7 +152,6 @@ void CcdbApi::storeAsBinaryFile(const char* buffer, size_t size, const std::stri
   }
 
   // Curl preparation
-  CURL* curl = nullptr;
   struct curl_httppost* formpost = nullptr;
   struct curl_httppost* lastptr = nullptr;
   struct curl_slist* headerlist = nullptr;
@@ -160,34 +164,30 @@ void CcdbApi::storeAsBinaryFile(const char* buffer, size_t size, const std::stri
                CURLFORM_BUFFERLENGTH, size,
                CURLFORM_END);
 
-  curl = curl_easy_init();
   headerlist = curl_slist_append(headerlist, buf);
-  if (curl != nullptr) {
-    string fullUrl = getFullUrlForStorage(curl, path, objectType, metadata, sanitizedStartValidityTimestamp, sanitizedEndValidityTimestamp);
+  if (mCurl != nullptr) {
+    string fullUrl = getFullUrlForStorage(mCurl, path, objectType, metadata, sanitizedStartValidityTimestamp, sanitizedEndValidityTimestamp);
     LOG(debug3) << "Full URL Encoded: " << fullUrl;
     /* what URL that receives this POST */
-    curl_easy_setopt(curl, CURLOPT_URL, fullUrl.c_str());
-    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headerlist);
-    curl_easy_setopt(curl, CURLOPT_HTTPPOST, formpost);
+    curl_easy_setopt(mCurl, CURLOPT_URL, fullUrl.c_str());
+    curl_easy_setopt(mCurl, CURLOPT_HTTPHEADER, headerlist);
+    curl_easy_setopt(mCurl, CURLOPT_HTTPPOST, formpost);
 
     /* Perform the request, res will get the return code */
-    CURLcode res = curl_easy_perform(curl);
+    CURLcode res = curl_easy_perform(mCurl);
     /* Check for errors */
     if (res != CURLE_OK) {
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
               curl_easy_strerror(res));
     }
 
-    /* always cleanup */
-    curl_easy_cleanup(curl);
-
     /* then cleanup the formpost chain */
     curl_formfree(formpost);
     /* free slist */
     curl_slist_free_all(headerlist);
-  } else {
+  } /*else {
     cerr << "curl initialization failure" << endl;
-  }
+  }*/
 }
 
 void CcdbApi::storeAsTFile(const TObject* rootObject, std::string const& path, std::map<std::string, std::string> const& metadata,

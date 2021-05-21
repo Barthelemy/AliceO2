@@ -384,6 +384,8 @@ class CcdbApi //: public DatabaseInterface
   mutable TGrid* mAlienInstance = nullptr;                     // a cached connection to TGrid (needed for Alien locations)
   bool mHaveAlienToken = false;                                // stores if an alien token is available
 
+  CURL* mCurl = nullptr;
+
   ClassDefNV(CcdbApi, 1);
 };
 
